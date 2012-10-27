@@ -1,4 +1,4 @@
-package com.pugwoo;
+package com.pugwoo.test;
 
 public class Common {
 

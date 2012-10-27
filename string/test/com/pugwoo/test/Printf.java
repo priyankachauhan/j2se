@@ -1,4 +1,4 @@
-package com.pugwoo;
+package com.pugwoo.test;
 
 import java.util.Formatter;
 

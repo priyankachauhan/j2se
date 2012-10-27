@@ -1,4 +1,4 @@
-package com.pugwoo;
+package com.pugwoo.test;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
