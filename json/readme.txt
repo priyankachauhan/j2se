@@ -1,0 +1,5 @@
+如果是HalfJson，推荐fastjson
+
+如果是反序列化，生成对象，推荐jackson，因为它能对空字符串的json转成null的object
+
+不再推荐gson，因为它违背java的基本规则，不是通过public的getter获取数据，此外gson的性能并不高

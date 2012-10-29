@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<books owner="pugwoo">
+	<book id="3">
+		<title ID="boo1_name">数学原理</title>
+		<price>23</price>
+	</book>
+	<book id="4">
+		<title>计算机原理</title>
+		<price>78</price>
+	</book>
+</books>

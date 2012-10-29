@@ -1,0 +1,3 @@
+dom4j
+hibernate采用的xml解析工具
+概念：Document Element

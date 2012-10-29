@@ -1,0 +1,10 @@
+*Map
+
+"{\"id\":3,\"name\":\"pugwoo\",\"password\":\"123456789abcdefg\",\"age\":24,\"income\":1234.56789,\"others\":{\"birth\":\"1987-03-30\",\"male\":true,\"interest:\":[\"Computer\",3,\"math\"]}}"
+
+"{id:3,name:'pugwoo',password:'123456789abcdefg',age:24,income:1234.56789,others:{birth:'1987-03-30',male:true,interest:['Computer',3,'math']}}"
+
+
+*List
+
+"[\"hi\",123,123.4545,[],[\"google\",{},{\"name\":\"g\",\"age\":28}]]"
