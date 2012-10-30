@@ -1,0 +1,81 @@
+BODY{
+	FONT-SIZE: 9pt; 
+	line-height: 150%; 
+	margin-top:10px;
+	margin-bottom:0px;
+	margin-left:10px;
+	margin- right:0px;
+	scrollbar-face-color: #f6f6f6;
+	scrollbar-highlight-color: #ffffff; 
+	scrollbar-shadow-color: #cccccc; 
+	scrollbar-3dlight-color: #cccccc; 
+	scrollbar-arrow-color: #330000; 
+	scrollbar-track-color: #f6f6f6; 
+	scrollbar-darkshadow-color: #ffffff;
+}
+input{
+	BORDER-TOP-WIDTH: 1px; 
+	PADDING-RIGHT: 1px; 
+	PADDING-LEFT: 1px; 
+	BORDER-LEFT-WIDTH: 1px; 
+	FONT-SIZE: 9pt; 
+	BORDER-LEFT-COLOR: #cccccc; 
+	BORDER-BOTTOM-WIDTH: 1px; 
+	BORDER-BOTTOM-COLOR: #cccccc; 
+	PADDING-BOTTOM: 1px; 
+	BORDER-TOP-COLOR: #cccccc; 
+	PADDING-TOP: 1px; 
+	BORDER-RIGHT-WIDTH: 1px; 
+	BORDER-RIGHT-COLOR: #cccccc; 
+	font-family: "????", "Arial", "Helvetica", "sans-serif";
+	font-size:12px;
+}
+
+a:link { FONT-SIZE: 12px;color:#4020a0;text-decoration:none}
+a:visited { FONT-SIZE: 12px;color:#4020a0;text-decoration:none}
+a:hover { FONT-SIZE: 12px;color:#FF0000; text-decoration:underline; }
+
+td {
+	font-size: 12px;
+}
+
+
+#gridData{
+	margin-left:2px;
+	margin-top:2px;
+	padding-top:5px;
+	padding-bottom:5px;
+	background-color:#E2F0FE;
+	width: 100%;
+	align:center;
+}
+#gridData table {
+	background-color:#7C9CCB;
+	align:center;
+	margin: 5px;
+	width: 98%;
+}
+#gridData table tr{
+	font-size: 12px;
+	background-color:#F2F8FE;
+	
+}
+#gridData table td{
+	font-size: 12px;
+	AAAAAbackground-color:#F2F8FE;
+	
+}
+
+.listtable{
+	WIDTH: 95%; 
+}
+.listtable td{
+	border-top: 1px solid #ffffff;
+	border-bottom: 1px solid #dddddd;
+	
+}
+.listtabletitle{
+	color:"#4020a0";
+	font-weight:bold;
+	FONT-SIZE: 12px;
+}
