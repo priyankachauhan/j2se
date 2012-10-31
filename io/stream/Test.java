@@ -7,7 +7,7 @@ public class Test {
 
 	public static void main(String[] args) throws Exception {
 
-		InputStream nin = new URL("http://www.baidu.com").openStream();
+		InputStream nin = new URL("http://www.qq.com").openStream();
 		InputStreamReader ireader = new InputStreamReader(nin, "gb2312");
 		BufferedReader breader = new BufferedReader(ireader);
 		String str;
