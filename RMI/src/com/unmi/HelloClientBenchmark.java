@@ -2,6 +2,8 @@ package com.unmi;
 
 import java.rmi.Naming;
 
+import com.pugwoo.remote.HelloInterface;
+
 /**
  * @author nickxie
  * 2012-11-6 下午02:19:37
@@ -27,7 +29,7 @@ public class HelloClientBenchmark {
 
 			// 调用远程方法
 			for (int i = 0; i < times; i++) {
-				hello.say();
+				hello.say("hello world");
 			}
 		} catch (Exception e) {
 			System.out.println("HelloClient exception: " + e);

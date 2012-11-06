@@ -2,6 +2,9 @@ package com.unmi;
   
 import java.rmi.Naming;   
 import java.rmi.registry.LocateRegistry;   
+
+import com.pugwoo.remote.HelloImpl;
+import com.pugwoo.remote.HelloInterface;
   
 public class HelloServer   
 {   
@@ -20,7 +23,7 @@ public class HelloServer
            
          //创建远程对象的一个或多个实例，下面是hello对象   
          //可以用不同名字注册不同的实例   
-         HelloInterface hello = new Hello("Hello, world!");   
+         HelloInterface hello = new HelloImpl();   
            
          //把hello注册到RMI注册服务器上，命名为Hello   
          Naming.rebind("Hello", hello);   

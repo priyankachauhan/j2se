@@ -1,0 +1,8 @@
+1. 打印java程序内存对象个数和占用内存
+   jmap -histo [pid]
+   *其中类型：[B  == byte[]
+           [I  == int[]
+           [[B == byte[][]
+           [C  == char[]
+           [Z  == boolean[]
+      
