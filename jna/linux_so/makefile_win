@@ -1,0 +1,4 @@
+all: helloworld.dll
+
+helloworld.dll:so_helloworld.c
+	gcc so_helloworld.c -shared -o mydll.dll
