@@ -12,3 +12,8 @@ apache DBCP和Pool
 注：如果使用Spring+DBUtils，则可以用Spring的DataSource
 
 如果使用Oracle，则QueryRunner初始化用参数true：new QueryRunner(true);
+
+关于【中文乱码】问题：
+有2个地方需要注意一下：
+1）数据库和表必须确认是哪种编码，一般选utf8编码
+2）数据库链接url加上：?useUnicode=true&characterEncoding=utf8
