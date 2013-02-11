@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="orion-ssh"/>
 	<classpathentry kind="src" path="ganymed-ssh"/>
 	<classpathentry kind="src" path="jsch"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
-	<classpathentry kind="lib" path="lib/orion-ssh2-214.jar"/>
 	<classpathentry kind="lib" path="lib/ganymed-ssh2-build251beta1.jar"/>
 	<classpathentry kind="lib" path="lib/org.apache.log4j_1.2.15.v201012070815.jar"/>
 	<classpathentry kind="lib" path="lib/jsch-0.1.49.jar"/>
+	<classpathentry kind="lib" path="lib/expect4j-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/org.apache.oro_2.0.8.v201005080400.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

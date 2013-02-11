@@ -9,19 +9,21 @@ import ch.ethz.ssh2.Connection;
 import ch.ethz.ssh2.Session;
 import ch.ethz.ssh2.StreamGobbler;
 
+/**
+ * ssh登录一台机器并执行一行命令
+ * 
+ * 2012年11月16日 下午10:45:23
+ */
 public class Basic {
 	public static void main(String[] args) {
+		
 		String hostname = "192.168.56.102";
 		String username = "root";
 		String password = "123456";
 
 		try {
-			/* Create a connection instance */
 			Connection conn = new Connection(hostname);
-
-			/* Now connect */
 			conn.connect();
-
 			/*
 			 * Authenticate. If you get an IOException saying something like
 			 * "Authentication method password not supported by the server at this stage."
@@ -36,10 +38,8 @@ public class Basic {
 			/* Create a session */
 			Session sess = conn.openSession();
 
-			sess.execCommand("uname -a && date && uptime && who");
-
-			System.out
-					.println("Here is some information about the remote host:");
+//			sess.execCommand("uname -a && date && uptime && who");
+			sess.execCommand("ls");
 
 			/*
 			 * This basic example does not handle stderr, which is sometimes
