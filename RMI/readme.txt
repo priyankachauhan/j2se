@@ -2,6 +2,9 @@ http://damies.iteye.com/blog/51778
 
 2012年11月6日 16:19:32
 
+关于性能：
+RMI在windows本机上测试，空跑单线程每秒钟可达6000+次/秒，网络性能符合要求。
+
 使用了spring的rmi（可以不继承remote），还有异步的例子：http://buralin.iteye.com/blog/1389172
 命令行运行方式：
 E:\j2se_workspace\CypherService\target\classes>java -cp .;..\..\lib\spring-2.5.6.jar;..\..\lib\commons-logging-1.1.1.jar edu.gmit.rmi.Server

@@ -20,6 +20,7 @@ public class HelloClientBenchmark {
 
 		int times = Integer.valueOf(argv[0]);
 
+		long start = System.currentTimeMillis();
 		try {
 			HelloInterface hello = (HelloInterface) Naming.lookup("Hello");
 
@@ -34,5 +35,8 @@ public class HelloClientBenchmark {
 		} catch (Exception e) {
 			System.out.println("HelloClient exception: " + e);
 		}
+		
+		long stop = System.currentTimeMillis();
+		System.out.println((stop - start) + "ms");
 	}
 }

@@ -161,6 +161,19 @@ public class ExpectClient {
 				}
 
 				if (isPrompt) {
+					// 由于expect无法正则匹配行首行尾^$，这里就再加强判断
+					boolean atLeastMatchOne = false;
+					for (String regEx : linuxPromptRegEx) {
+						if (Pattern.compile("^" + regEx + "$").matcher(pattern)
+								.find()) {
+							atLeastMatchOne = true;
+							break;
+						}
+					}
+					if (!atLeastMatchOne) { // 至少要匹配一个输入提示
+						continue;
+					}
+
 					readyToInput = true;
 					// 把outbuf最后的输入提示去掉
 					if (hasExecuted) {
@@ -205,6 +218,7 @@ public class ExpectClient {
 		System.out.print(ssh.execute("echo hello world"));
 
 		// 连接测试
+		ssh.addExpectInput("(yes/no)", "yes");
 		ssh.addExpectInput(".*password", "123456");
 		System.out.print(ssh.execute("ssh root@localhost"));
 
@@ -216,7 +230,7 @@ public class ExpectClient {
 		System.out.print(ssh.execute("do"));
 		System.out.print(ssh.execute("  echo $i"));
 		System.out.print(ssh.execute("done"));
-		
+
 		// 错误信息测试
 		System.out.print(ssh.execute("zz"));
 
