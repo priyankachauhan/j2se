@@ -26,4 +26,11 @@ public class ExpectClientTest extends TestCase {
 		System.out.println(expectClient
 				.execute("scp robovm-0.0.1.tar.gz root@192.168.56.104:~"));
 	}
+	
+	public void testExecuteOnce() throws Exception {
+		ExpectClient expectClient = new ExpectClient("192.168.56.102", 22,
+				"root", "123456");
+		String r = expectClient.executeOnce("date");
+		System.out.println(r);
+	}
 }

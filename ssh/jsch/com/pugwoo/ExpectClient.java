@@ -1,6 +1,7 @@
 package com.pugwoo;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +10,8 @@ import java.util.regex.Pattern;
 
 import org.apache.oro.text.regex.MalformedPatternException;
 
+import com.jcraft.jsch.Channel;
+import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.ChannelShell;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
@@ -28,7 +31,6 @@ import expect4j.matches.RegExpMatch;
  */
 public class ExpectClient {
 
-	private static final int COMMAND_EXECUTION_FAIL_OPCODE = -2;
 	private static String ENTER_CHARACTER = "\r";
 	// 只能通过这些正则表达式判断现在是输入命令的状态，但这样无法100%正确,不支持行首行尾^$
 	// 根据各自系统的提示添加匹配
@@ -59,6 +61,7 @@ public class ExpectClient {
 	private String password;
 	private String host;
 	private int port;
+	private boolean isInit = false;
 
 	private void init() throws IOException, Exception {
 		addBindMatch(linuxPromptRegEx, closure);
@@ -72,6 +75,8 @@ public class ExpectClient {
 		channel = (ChannelShell) session.openChannel("shell");
 		expect = new Expect4j(channel.getInputStream(), channel
 				.getOutputStream());
+		// 取消超时机制
+		expect.setDefaultTimeout(Expect4j.TIMEOUT_FOREVER);
 		channel.connect();
 	}
 
@@ -81,7 +86,13 @@ public class ExpectClient {
 		this.userName = userName;
 		this.password = password;
 		this.port = port;
-		init();
+	}
+
+	public ExpectClient(Host host) {
+		this.host = host.getHost();
+		this.port = host.getPort();
+		this.userName = host.getUsername();
+		this.password = host.getPassword();
 	}
 
 	/**
@@ -128,15 +139,29 @@ public class ExpectClient {
 	/**
 	 * 用户自定义删除提示pattern和对应的输入
 	 */
-	public void delExpectInput(String patternRegEx, String input) {
+	public void delExpectInput(String patternRegEx) {
 		matchInput.remove(patternRegEx);
 		delBindMatch(patternRegEx);
+	}
+
+	/**
+	 * 清空用户自定义提示pattern
+	 */
+	public void clearExpectInput() {
+		for (String key : matchInput.keySet()) {
+			delExpectInput(key);
+		}
 	}
 
 	/**
 	 * 单线程调用，返回null表示执行失败
 	 */
 	public String execute(String cmd) throws Exception {
+		if (!isInit) {
+			init();
+			isInit = true;
+		}
+
 		outbuf.delete(0, outbuf.length()); // 清空输出
 		hasExecuted = false;
 		boolean executeEnd = false;
@@ -144,7 +169,9 @@ public class ExpectClient {
 		while (!executeEnd) {
 			if (!readyToInput) {
 				int ret = expect.expect(matchPattern);
-				if (ret == COMMAND_EXECUTION_FAIL_OPCODE) {
+				if (ret < 0) {
+					System.err.println("ret:" + ret);
+					System.err.println(outbuf);
 					return null;
 				}
 
@@ -207,6 +234,52 @@ public class ExpectClient {
 		}
 	}
 
+	/**
+	 * 执行一行代码，然后关闭连接
+	 */
+	public String executeOnce(String cmd) throws Exception {
+		JSch jsch = new JSch();
+		Session session = jsch.getSession(userName, host, 22);
+		session.setPassword(password);
+		session.setConfig("StrictHostKeyChecking", "no");
+		session.connect();
+
+		Channel channel = session.openChannel("exec");
+		((ChannelExec) channel).setCommand(cmd);
+		((ChannelExec) channel).setErrStream(System.err);
+		InputStream in = channel.getInputStream();
+		channel.connect();
+
+		StringBuilder sb = new StringBuilder();
+		byte[] buf = new byte[1024];
+		int exitStatus = 0;
+		while (true) {
+			while (in.available() > 0) {
+				int len = in.read(buf, 0, buf.length);
+				if (len < 0)
+					break;
+				sb.append(new String(buf, 0, len));
+			}
+			if (channel.isClosed()) {
+				exitStatus = channel.getExitStatus();
+				break;
+			}
+			// 异步io轮询
+			try {
+				Thread.sleep(100);
+			} catch (Exception e) {
+			}
+		}
+		channel.disconnect();
+		session.disconnect();
+
+		if (exitStatus != 0) {
+			return null;
+		} else {
+			return sb.toString();
+		}
+	}
+
 	public static void main(String[] args) throws Exception {
 		long start = System.currentTimeMillis();
 
@@ -239,5 +312,13 @@ public class ExpectClient {
 
 		long stop = System.currentTimeMillis();
 		System.out.println((stop - start) + "ms");
+	}
+
+	public Expect4j getExpect() {
+		return expect;
+	}
+
+	public void setExpect(Expect4j expect) {
+		this.expect = expect;
 	}
 }

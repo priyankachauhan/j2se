@@ -35,7 +35,7 @@ public class NIOEchoServer {
 		System.out.println("Server started successfully at port: " + port);
 	}
 
-	// 监听，不停地接受客户端连接
+	// 监听，不停地接受客户端连接和处理读写事件
 	public void listen() throws IOException {
 		while (true) {
 			// 阻塞，直到有事件发生
@@ -80,6 +80,7 @@ public class NIOEchoServer {
 			buffer.clear();
 			try {
 				count = client.read(buffer);
+				System.out.println("read count: " + count);
 				// 暂时不考虑buffer满了的问题
 				if (count > 0) {
 					String recv = new String(buffer.array(), 0, count, "UTF-8");
@@ -101,7 +102,7 @@ public class NIOEchoServer {
 			buffer.flip();
 			try {
 				count = client.write(buffer);
-//				System.out.println("count:" + count);
+				System.out.println("write count:" + count);
 				if (count > 0) {
 					// 写一个之后就关闭链接
 					client.close();
