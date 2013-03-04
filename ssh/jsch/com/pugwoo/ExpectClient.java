@@ -28,14 +28,20 @@ import expect4j.matches.RegExpMatch;
  * 只支持单线程，设计理念：
  * 1) 依靠ssh命令行提示来判断命令的顺序执行
  * 2) 依靠expect的Map来判断当前的提示要输入什么内容，这个map可以动态改变
+ * 
+ * 2013年2月28日 07:41:06
+ * 考虑加入timeout match，但是无法保证正常性
  */
 public class ExpectClient {
 
-	private static String ENTER_CHARACTER = "\r";
+	public static String ENTER_CHARACTER = "\r";
+	public static String CTRL_C = "\003";
+	public static String PROMPT1 = "(^\\[.*@.*\\][#,$] $|(?=.*)\\[.*@.*\\][#,$] $)";
+	public static String PROMPT2 = "(^> $|\n> $)";
+
 	// 只能通过这些正则表达式判断现在是输入命令的状态，但这样无法100%正确,不支持行首行尾^$
 	// 根据各自系统的提示添加匹配
-	private static String[] linuxPromptRegEx = new String[] { ">",
-			"\\[.*@.*\\][#,$]" };
+	private static String[] linuxPromptRegEx = new String[] { PROMPT1, PROMPT2 };
 
 	private Session session = null;
 	private ChannelShell channel = null;
@@ -46,9 +52,8 @@ public class ExpectClient {
 	private StringBuilder outbuf = new StringBuilder();
 	private Closure closure = new Closure() {
 		public void run(ExpectState expectState) throws Exception {
-			if (hasExecuted) {
+			if (hasExecuted)
 				outbuf.append(expectState.getBuffer());
-			}
 		}
 	};
 	// 所有要expect的pattern都添加到这单个listPattern中，默认有linux输出提示符号
@@ -161,6 +166,7 @@ public class ExpectClient {
 			init();
 			isInit = true;
 		}
+		cmd = cmd == null ? "" : cmd;
 
 		outbuf.delete(0, outbuf.length()); // 清空输出
 		hasExecuted = false;
@@ -177,6 +183,7 @@ public class ExpectClient {
 
 				// 通过判断pattern来确定输入，如果在用户自定义的输入中
 				String pattern = expect.getLastState().getMatch();
+
 				boolean isPrompt = true;
 				for (String key : matchInput.keySet()) {
 					if (Pattern.compile(key).matcher(pattern).find()) {
@@ -188,25 +195,11 @@ public class ExpectClient {
 				}
 
 				if (isPrompt) {
-					// 由于expect无法正则匹配行首行尾^$，这里就再加强判断
-					boolean atLeastMatchOne = false;
-					for (String regEx : linuxPromptRegEx) {
-						if (Pattern.compile("^" + regEx + "$").matcher(pattern)
-								.find()) {
-							atLeastMatchOne = true;
-							break;
-						}
-					}
-					if (!atLeastMatchOne) { // 至少要匹配一个输入提示
-						continue;
-					}
-
 					readyToInput = true;
 					// 把outbuf最后的输入提示去掉
-					if (hasExecuted) {
-						int len = outbuf.length();
-						outbuf.delete(len - pattern.length(), len);
-					}
+					if (hasExecuted)
+						outbuf.delete(outbuf.length() - pattern.length(),
+								outbuf.length());
 				}
 			} else {
 				if (hasExecuted) {
@@ -283,12 +276,13 @@ public class ExpectClient {
 	public static void main(String[] args) throws Exception {
 		long start = System.currentTimeMillis();
 
-		ExpectClient ssh = new ExpectClient("192.168.56.102", 22, "root",
+		ExpectClient ssh = new ExpectClient("192.168.56.103", 22, "root",
 				"123456");
 
 		// 正常命令测试
 		System.out.print(ssh.execute("date"));
 		System.out.print(ssh.execute("echo hello world"));
+		System.out.print(ssh.execute("echo -n hello world"));
 
 		// 连接测试
 		ssh.addExpectInput("(yes/no)", "yes");

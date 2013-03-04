@@ -12,7 +12,7 @@ public class UtilsTest extends TestCase {
 	public void testMd5() throws Exception {
 		ExpectClient client = new ExpectClient(host, port, username, password);
 		String fn = "/etc/passwd";
-		System.out.print(Utils.getMD5(client, fn));
+		System.out.print(Utils.md5sum(client, fn));
 	}
 
 	public void testScp() throws Exception {
@@ -24,5 +24,10 @@ public class UtilsTest extends TestCase {
 		ExpectClient client = new ExpectClient(hostSrc);
 		String result = Utils.scp(client, hostSrc, fileSrc, hostDest, fileDest);
 		System.out.println(result);
+	}
+	
+	public void testLs() throws Exception{
+		ExpectClient client = new ExpectClient(host, port, username, password);
+		Utils.ls(client, "");
 	}
 }

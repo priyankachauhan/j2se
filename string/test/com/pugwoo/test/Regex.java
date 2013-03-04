@@ -15,6 +15,11 @@ public class Regex {
 		 * 判断是否所有字符都是数字，空的也算是
 		 */
 		System.out.println("123".matches("[0-9]*")); // true
+		
+		/**
+		 * 测试行首^行尾$的匹配
+		 */
+		System.out.println("abc".matches("^abc$")); // true
 
 		/**
 		 * string.split(String regex)

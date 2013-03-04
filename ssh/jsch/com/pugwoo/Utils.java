@@ -1,5 +1,6 @@
 package com.pugwoo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ public class Utils {
 	/**
 	 * 获得文件的md5
 	 */
-	public static String getMD5(ExpectClient client, String filename)
+	public static String md5sum(ExpectClient client, String filename)
 			throws Exception {
 		String fn = filename.replace("\"", "\\\"");
 		String md5 = client.executeOnce("md5sum \"" + fn + "\"");
@@ -26,9 +27,18 @@ public class Utils {
 	/**
 	 * 获得远程文件/文件夹的文件信息
 	 */
-	public static List<FileInfo> getFileInfo(ExpectClient client,
-			String filename) {
+	public static List<FileInfo> ls(ExpectClient client, String filename)
+			throws Exception {
+		filename = filename == null ? "" : filename;
+		String result;
 
+		result = client.execute("ls -l -R --time-style '+%Y-%m-%d %H:%M:%S' "
+				+ filename + "|tee");
+
+		System.out.print(result);
+		// TODO
+
+		return new ArrayList<FileInfo>();
 	}
 
 	/**
