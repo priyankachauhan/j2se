@@ -12,7 +12,8 @@ public class BenchNewFixedThreadPool {
 		
 		// 测试结果：当线程数达到千万级别时，由于一次全部加入到pool
 		// 会出现各种错误，包括java.lang.OutOfMemoryError
-		// 所以要控制加入的速度，可以参考TCP的窗口
+		// 所以要控制加入的速度
+		// 参考【BenchThreadPool】
 		int fixedThreadPoolSize = 1000;
 		int threadNum = 10000000;
 		ExecutorService service = Executors

@@ -7,18 +7,22 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 用于测试固定线程池的性能
+ * 用于测试指定固定线程池且队列限长的threadPool的性能
+ * 
+ * 空跑以测试threadPool本身的性能
+ * 进程池并非越大越大，例如1kw的任务，在进程池大小为100，队列长度为1000时，只需要25.7s就完成
+ * 而线程池大小为1000，队列长度为10000时，需要110s才能完成
  */
 public class BenchThreadPool {
 
 	public static void main(String[] args) {
 		
-		// 测试结果：当线程数达到千万级别时，由于一次全部加入到pool
-		// 会出现各种错误，包括java.lang.OutOfMemoryError
-		// 所以要控制加入的速度，可以参考TCP的窗口
-		int fixedThreadPoolSize = 1000;
-		int queueSize = 10000;
+		int fixedThreadPoolSize = 100;
+		int queueSize = 1000;
 		int threadNum = 10000000;
+		
+		CountTime countTime = new CountTime();
+		countTime.start();
 		
 		ThreadPoolExecutor executor = new ThreadPoolExecutor(fixedThreadPoolSize, fixedThreadPoolSize, 0L, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(queueSize));
 		executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
@@ -29,12 +33,14 @@ public class BenchThreadPool {
 			executor.execute(new Runnable() {
 				@Override
 				public void run() {
-					System.out.println(fi);
+//					System.out.println(fi);
 				}
 			});
 		}
 		
 		executor.shutdown();
+		
+		countTime.printInMs();
 	}
 
 }
