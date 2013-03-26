@@ -126,9 +126,9 @@ class Test {
 public class TestSynchronized {
 
 	public static void main(String[] args) throws InterruptedException {
-		// Test test = new Test(new NotSyncStore(10000000), 1000, 1000);
-		// Test test = new Test(new SyncStore(10000000), 1000, 1000);
-		// Test test = new Test(new ReentrantStore(10000000), 1000, 1000);
+//		 Test test = new Test(new NotSyncStore(10000000), 1000, 1000);
+//		 Test test = new Test(new SyncStore(10000000), 1000, 1000);
+//		 Test test = new Test(new ReentrantStore(10000000), 1000, 1000);
 		Test test = new Test(new AtomicStore(10000000), 1000, 1000);
 		CountTime countTime = new CountTime();
 		countTime.start();
@@ -136,6 +136,14 @@ public class TestSynchronized {
 		double ms = countTime.getTimeInMs();
 		// 结果要减去1秒的等待时间
 		System.out.println(ms - 1000 + "ms");
+		
+		/**
+		 * 注意这里只能一个一个test单独进行测试，结果：
+		 * NotSyncStore 99ms
+		 * SyncStore 217ms
+		 * ReentrantStore 137ms
+		 * AtomicStore 85.38ms
+		 */
 	}
 
 }
