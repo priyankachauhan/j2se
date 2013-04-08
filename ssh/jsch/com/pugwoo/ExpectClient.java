@@ -34,14 +34,14 @@ import expect4j.matches.RegExpMatch;
  */
 public class ExpectClient {
 
-	public static String ENTER_CHARACTER = "\r";
-	public static String CTRL_C = "\003";
-	public static String PROMPT1 = "(^\\[.*@.*\\][#,$] $|(?=.*)\\[.*@.*\\][#,$] $)";
-	public static String PROMPT2 = "(^> $|\n> $)";
+	public static final String ENTER_CHARACTER = "\r";
+	public static final String CTRL_C = "\003";
+	public static final String CENTOS_PROMPT = "(^\\[.*@.*\\][#,$] $|(?=.*)\\[.*@.*\\][#,$] $)";
+	public static final String CONTINUE_PROMPT = "(^> $|\n> $)";
 
 	// 只能通过这些正则表达式判断现在是输入命令的状态，但这样无法100%正确,不支持行首行尾^$
 	// 根据各自系统的提示添加匹配
-	private static String[] linuxPromptRegEx = new String[] { PROMPT1, PROMPT2 };
+	private static String[] linuxPromptRegEx = new String[] { CENTOS_PROMPT, CONTINUE_PROMPT };
 
 	private Session session = null;
 	private ChannelShell channel = null;
