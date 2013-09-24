@@ -10,7 +10,12 @@ CREATE TABLE person (
      PRIMARY KEY (id) 
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=gbk;
 
+【可以看出，这个表的字段和该类的字段名称必须一致】
+
 通过getter和setter获得和设置数据
+
+对于DAO层的model，其成员尽量不要使用基础类型，如int，应该用Integer
+
  * @author pugwoo
  * @date 2011-11-13
  */
