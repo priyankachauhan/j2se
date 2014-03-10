@@ -8,3 +8,12 @@ http://blog.csdn.net/ahxu/article/details/249610
 4.调用System.exit方法，使整个程序（所有线程）终止。
 
 每一个Timer仅对应唯一一个线程。Timer类的线程安全的。
+
+Do not use Timer in an Java EE environment!
+If the task throws a runtime exception, then the whole Timer is killed and won't run anymore.
+You basically needs to restart the whole server to get it to run again.
+Also, it is sensitive to changes in the system clock.
+
+Use ScheduledExcecutorService instead. 
+It's not sensitive to exceptions thrown in tasks nor to changes in system clock.
+You can shutdown it by its shutdownNow() method.
