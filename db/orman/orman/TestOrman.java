@@ -72,7 +72,7 @@ public class TestOrman extends TestCase {
 	}
 
 	public void testUpdate() {
-		
+		// 无法只更新部分的值，也无法自己构造一个主键的对象来更新，只能先查再更新，太不灵活了
 	}
 
 	public static void main(String[] args) {
