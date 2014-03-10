@@ -1,0 +1,1 @@
+采用javamail：http://www.oracle.com/technetwork/java/index-138643.html
