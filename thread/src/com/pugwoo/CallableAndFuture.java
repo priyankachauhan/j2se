@@ -36,12 +36,19 @@ public class CallableAndFuture {
 			}
 			if (this.flag == 1) {
 				// 如果flag的值为1，做一个无限循环     
+
 				try {
 					while (true) {
 						System.out.println("looping.");
+						//					try {
 						Thread.sleep(2000);
+						//					} catch (InterruptedException e) {
+						//						System.out.println("Interrupted");
+						//					}
+						//					if (1 == 0)
+						//						break;
 					}
-				} catch (InterruptedException e) {
+				} catch (InterruptedException e) { // 实际上，是这个interupt跳出循环的，如果没有这个，线程无法被杀死
 					System.out.println("Interrupted");
 				}
 				return "false";

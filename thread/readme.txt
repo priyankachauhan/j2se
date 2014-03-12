@@ -5,7 +5,7 @@
 2) ready： Thread对象准备就绪，只有一获得CPU，就可执行
 3) run: 运行状态，Thread对象获得CPU
 4) wait: 等待/阻塞/睡眠状态，线程仍是alive，但不是ready状态
-5) dead: 线程死亡，当run()代码执行完成或被其它线程中断
+5) dead: 线程死亡，当run()代码执行完成或没有捕获到的异常事件终止了run方法的执行，从而导致线程突然死亡
 
 创建线程的两种方法：
 1) 实现Runnable接口，重写run方法。然后创建该类实例obj,用new Thread(obj)创建Thread实例，调用该实例start()方法。
@@ -25,6 +25,9 @@
 8) Thread对象getState()方法，Thread.State枚举状态：NEW  RUNNABLE  BLOCKED  WAITING  TIMED_WAITING  TERMINATED
 9) 线程让步,Thread.yield()主动让出CPU，进程从running状态转为runnable状态，不是阻塞。注意：yield出去的进程还是可能在下一次被选中的。
 10) thread对象的join方法，使当前进程暂停“等待”thread对象执行完之后再执行。
+
+11) 所有obj对象都有wait()方法，调用该方法的线程将阻塞在该obj上，直到该obj在【其他】进程中被调用了notify()或notifyAll()方法
+    调用该obj的wait()和notify()、notifyAll()方法时，必须放在该obj的synchronized(obj){}中
 
 关于关键字volatile
 当一个变量声明为volatile类型，则说明该变量随时可能被其它线程更改，要求程序每次读取时都“刷新”

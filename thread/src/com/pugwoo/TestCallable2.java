@@ -29,7 +29,7 @@ public class TestCallable2 {
         // 异步等待，处理线程返回结果
         try {  
             Thread.sleep(1000);// 可能做一些事情  
-            System.out.println(future.get());  
+            System.out.println(future.get());  // future.get()是阻塞的
         } catch (InterruptedException e) {  
             e.printStackTrace();  
         } catch (ExecutionException e) {  
