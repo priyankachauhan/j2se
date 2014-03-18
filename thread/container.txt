@@ -1,0 +1,12 @@
+2014年3月17日 17:51:33
+尽量使用java并发工具，而不要自行控制wait和notify
+
+java.util.concurrent中高级的工具分3类：
+
+1) Executor Framework
+   例如各种进程池
+
+2) Concurrent Collection
+  各种多线程安全的容器，例如ConcurrentHashMap
+  
+3) Synchronizer 同步器，例如

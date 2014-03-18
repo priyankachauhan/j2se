@@ -1,0 +1,17 @@
+来自《Effective Java》一书中的线程同步级别：
+
+1) 不可变(immutable)对象
+   例如：String  Long  BigInteger等
+
+2) 无条件的线程安全(unconditionally thread-safe)
+    例如：Random和ConcurrentHashMap等
+    这些对象的使用很方便，完全无需外部同步，直接多线程就可以对它们进行操作，内部同步
+
+3) 有条件的线程安全（部分方法需要外部同步）
+
+4) 非线程安全(not thread-safe)
+    例如：ArrayList和HashMap
+    对这些对象的操作需要外部同步
+
+5) 线程对立的（thread-hostile）
+  极少，现在几乎没有了，已经废弃的方法：System.runFinalizersOnExit方法就是线程对立的

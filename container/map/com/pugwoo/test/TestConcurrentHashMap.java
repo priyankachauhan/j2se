@@ -12,6 +12,7 @@ public class TestConcurrentHashMap {
 		map.put(1, 1);
 		System.out.println(map.get(1));
 		
-		
+		map.putIfAbsent(1, 3); // 如果key不存在，则插入，原子操作
+		System.out.println(map.get(1)); // 还是1，因为都在main线程，先后有关系
 	}
 }
