@@ -1,0 +1,30 @@
+2012年2月13日 15:28:38
+
+Java语言采取两种截然不同的磁盘文件结构。
+一个是基于字节流，另一个是字符(unicode)序列（一个字符==2个字节）。
+前者是InputStream/OutputStream，后者是Reader/Writer.
+
+== InputStream就是将一个外部文件(包括网络、磁盘等)转换成byte流输入到内存。
+
+简单来说就是，stream的话java不关心是什么编码，java看起来就是字节流。
+而reader/writer则是有编码的字符，java内部是unicode编码。
+
+所有的输入流都继承自虚类InputStream，它定义了唯一的最重要的接口：
+abstract int read() throws IOException;
+读取下一个字节，返回0~255；如果EOF，返回-1.  这是一个阻塞的方法。
+
+此外，InputStream还提供了2个实用的方法，均是调用read()方法：
+int read(byte b[])和int read(byte b[], int off, int len)
+
+常用：BufferedInputStream  FileInputStream  ByteArrayInputStream
+
+== OutputStream和InputStream刚好相反，该虚类定义了void write(int b)的虚方法，
+同时依赖于该方法实现了write(byte[])的另外2个方法。
+
+== Reader和Writer都是以char为单位的。一般来说，处理高层应用char，支持各种语言。
+虚类，要求实现public int read(char cbuf[], int off, int len) ，会阻塞，返回实际读取的长度（以char计）
+
+【对于stream转reader/writer】，java是自动解码的，所以有必要指定编码，如gb2312、utf-8等
+
+常用：BufferedReader(Reader in)  FileReader
+
