@@ -4,6 +4,17 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 2012年2月21日
+ * 
+ * ConcurrentHashMap是线程安全的HashMap，最主要的优化原理是【部分加锁】，这个map分成多个segments。
+ * 不是采用synchronized，而是用ReentrantLock
+ * 
+ * 当线程数>10时，ConcurrentHashMap就比使用synchronized的HashMap快了，线程数越多则快越多。
+ * 
+ * ConcurrentHashMap原理分析（有深度）
+ * http://geeklu.com/2010/07/concurrenthashmap/
+ * http://yinwufeng.iteye.com/blog/767084
+ * 
+ * 关于JSR133问题：http://snake1987.iteye.com/blog/987263
  */
 public class TestConcurrentHashMap {
 
