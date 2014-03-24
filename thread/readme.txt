@@ -14,12 +14,14 @@
 实现Runnable接口的好处：多个线程可共用一个runnable对象，这样不用static属性就可实现共享变量。
 当然，如果想让一个线程对应于一个obj，那继承Thread是最好的选择。
 
+不赞成使用 Thread.stop、Thread.suspend 和 Thread.resume. 换句话说，强制去终止指定的线程不是想象中那样去做到的。
+
 常用方法：
 1) Thread.currentThread() 获得当前运行的线程对象
 2) Thread对象.getName(); Thread对象.setName() 动态方法，获取或设置Thread对象名称
 3) Thread对象.start(); 激活线程
 4) Thread对象.isAlive(); 判断线程是否存活
-5) Thread.sleep(ms); 当前执行这条语句的线程睡眠ms毫秒；唤醒睡眠中的线程：thread对象.interrupt()方法
+5) Thread.sleep(ms); 当前执行这条语句的线程睡眠ms毫秒；由【另外一个线程】唤醒睡眠中的线程：thread对象.interrupt()方法
 6) 每个线程都有唯一的Id，thread对象getId()方法
 7) Thread对象的setPriority方法，一共有三种优先级MAX、NORM、MIN
 8) Thread对象getState()方法，Thread.State枚举状态：NEW  RUNNABLE  BLOCKED  WAITING  TIMED_WAITING  TERMINATED
